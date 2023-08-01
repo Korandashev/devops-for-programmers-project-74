@@ -20,7 +20,7 @@ services:
     depends_on:
       - db
   
-  webserver:
+  caddy:
     image: caddy:2.6
     ports:
       - "443:443"
