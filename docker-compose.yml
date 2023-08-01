@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+
+  app:
+    image: korandashev/devops-for-programmers-project-74:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    volumes:
+      - "/app"
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_PORT=5432
+      - DATABASE_HOST=db
+    command: bash -c 'sleep 3 && npm test'
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
