@@ -16,6 +16,12 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./app:/app
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_HOST=db
     command: bash -c 'sleep 3 && npm run dev'
     depends_on:
       - db
